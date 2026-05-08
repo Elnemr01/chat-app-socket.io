@@ -3,7 +3,12 @@ import { Navigate, useLocation } from 'react-router'
 
 
 const ProtectedRoute = ({children}) => {
-    let location = useLocation();
+    const location=useLocation();
+    
+    if(!localStorage.getItem('chatAppUserToken')) {
+        return <Navigate to='/login' state={{from:location}} replace />;
+    }
+    
 
     return (
         <>

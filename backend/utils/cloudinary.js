@@ -18,4 +18,15 @@ const storage = new CloudinaryStorage({
     },
 });
 
+
+const chatStorage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: "chatImages",
+        allowed_formats: ["jpg", "jpeg", "png", "webp"],
+    },
+});
+
 export const upload = multer({ storage });
+
+export const uploadChatImage = multer({ storage: chatStorage });

@@ -14,10 +14,10 @@ export const userRegister= async (req, res) => {
                 message:"User with this email already exists"
             });
         }
-
+    
         // hash password
         const hashedPassword= await bcrypt.hash(password,10);
-
+    
         const newUser= new User({
             fullName,
             email,
@@ -25,12 +25,12 @@ export const userRegister= async (req, res) => {
             bio,
             profilePicture: pictureUrl,
         });
-
+    
         // generate token
         const token = generateToken({id:newUser._id,email:newUser.email});
-
+    
         await newUser.save();
-
+    
         return res.status(201).json({
             status:"success",
             message:"User registered successfully",
@@ -68,7 +68,6 @@ export const userLogin= async (req, res) => {
         }
 
         const token = generateToken({id:user._id,email:user.email});
-
         return res.status(200).json({
             status:"success",
             message:"User logged in successfully",

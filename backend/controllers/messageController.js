@@ -1,5 +1,6 @@
 import User from "../schemas/userSchema.js";
 import Message from "../schemas/messageSchema.js";
+import { io, userSocketMap } from "../app.js";
 
 
 // get all users to show in the sidebar (except logged in user)
@@ -80,4 +81,36 @@ export const markMessagesAsSeen = async (req,res) => {
     } catch (error) {
         return res.status(500).json({message: "Internal server error"});
     }
+}
+
+export const sendMessage= async (req,res)=> {
+
+    try {
+        const {text}=req.body;
+        const senderId=req.user._id;
+        const receiverId=req.params.id;
+
+        const image=req.file ? req.file.path : 'no url founded';
+
+        const newMessage=await Message.create({
+            receiverId,
+            senderId,
+            text,
+            image,
+            seen: false,
+        })
+
+        let receiverSocketId= userSocketMap[receiverId];
+
+        if(receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage)
+        }
+
+
+        return res.status(200).json({status: "success", newMessage, message: "Message sent successfully"});
+
+    } catch (error) {
+        return res.status(500).json({message: "Internal server error"});
+    }
+
 }
