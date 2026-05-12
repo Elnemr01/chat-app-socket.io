@@ -8,25 +8,25 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// console.log(process.env.CLOUDINARY_CLOUD_NAME)
 
 const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: "users",
         allowed_formats: ["jpg", "jpeg", "png", "webp"],
+        upload_preset: 'usersUploadPreset'
     },
 });
 
 
-const chatStorage = new CloudinaryStorage({
-    cloudinary,
-    params: {
-        folder: "chatImages",
-        allowed_formats: ["jpg", "jpeg", "png", "webp"],
-    },
-});
+// const chatStorage = new CloudinaryStorage({
+//     cloudinary,
+//     params: {
+//         folder: "chatImages",
+//         allowed_formats: ["jpg", "jpeg", "png", "webp"],
+//     },
+// });
 
 export const upload = multer({ storage });
 
-export const uploadChatImage = multer({ storage: chatStorage });
+// export const uploadChatImage = multer({ storage: chatStorage });

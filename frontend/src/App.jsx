@@ -7,6 +7,7 @@ import AppLayout from './protectedRoutes/AppLayout'
 import Home from './pages/home/Home'
 import Profile from './pages/profile/Profile'
 import {Toaster} from "react-hot-toast"
+import EditProfile from './pages/profile/EditProfile'
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
         <Route path='/' element={<AppLayout/>} >
           <Route index element={<Home/>} />
           <Route path='/profile' element={<Profile/>} />
-
+          <Route path='/edit-profile' element={<EditProfile/>} />
         </Route>
       </Routes> 
     </section>

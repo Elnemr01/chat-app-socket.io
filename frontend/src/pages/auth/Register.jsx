@@ -40,7 +40,7 @@ import { useAuth } from "../../contextApi/UserProvider";
         onSuccess: (data) => {
             toast.success("Register successful");
             localStorage.setItem("chatAppUser", JSON.stringify(data.data.user));
-            localStorage.setItem("chatAppUserToken", JSON.stringify(data.data.token));
+            localStorage.setItem("chatAppUserToken", data.data.token);
             setUser(data.data.user);
             socketConnection(data.data.user);
             navigate('/');

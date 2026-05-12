@@ -1,7 +1,7 @@
 import express from 'express';
 import verifyToken from '../middlewares/verifyToken.js';
 import { getMessages, getSidebarUsers, markMessagesAsSeen, sendMessage } from '../controllers/messageController.js';
-import { uploadChatImage } from '../utils/cloudinary.js';
+// import { uploadChatImage } from '../utils/cloudinary.js';
 
 
 const messageRouter = express.Router();
@@ -15,8 +15,8 @@ messageRouter.route("/:id")
 messageRouter.route("/mark/:id")
     .patch(verifyToken,markMessagesAsSeen);
 
-messageRouter.route("/send-message/:id")
-    .post(verifyToken,uploadChatImage.single("image"),sendMessage);
+// messageRouter.route("/send-message/:id")
+//     .post(verifyToken,uploadChatImage.single("image"),sendMessage);
 
 
 

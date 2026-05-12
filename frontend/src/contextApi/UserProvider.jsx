@@ -10,7 +10,7 @@ export const useAuth=()=> useContext(userContext);
 const UserProvider = ({children}) => {
 
     let [user,setUser]=useState(()=> localStorage.getItem("chatAppUser") !== 'undefined' ? JSON.parse(localStorage.getItem("chatAppUser")) : null);
-    let [chatAppUserToken,setToken]=useState(()=> localStorage.getItem("chatAppUserToken") !== 'undefined' ? JSON.parse(localStorage.getItem("chatAppUserToken")) : null);
+    let [chatAppUserToken,setToken]=useState(()=> localStorage.getItem("chatAppUserToken") !== 'undefined' ? localStorage.getItem("chatAppUserToken") : null);
     let [socket,setSocket]=useState(null);
     let [onlineUsers,setOnlineUsers]=useState([]);
 

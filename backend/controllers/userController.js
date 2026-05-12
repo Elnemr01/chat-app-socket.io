@@ -4,7 +4,7 @@ import generateToken from "../utils/generateToken.js";
 
 
 export const userRegister= async (req, res) => {
-    const {fullName,email,password,bio}=req.body;
+    const {fullName,email,password}=req.body;
     const pictureUrl = req.file?.path;
     try {
         const oldUser = await User.findOne({email});
@@ -22,13 +22,12 @@ export const userRegister= async (req, res) => {
             fullName,
             email,
             password:hashedPassword,
-            bio,
             profilePicture: pictureUrl,
         });
     
         // generate token
         const token = generateToken({id:newUser._id,email:newUser.email});
-    
+        console.log(token);
         await newUser.save();
     
         return res.status(201).json({
@@ -90,21 +89,20 @@ export const userUpdateProfile= async (req,res) => {
     const {fullName,bio}=req.body;
     const pictureUrl = req.file?.path;
     const id=req.user._id;
+
+    console.log(pictureUrl)
+    const newUser= await User.findByIdAndUpdate(id,{ $set : {
+        bio,
+        fullName,
+        profilePicture: pictureUrl,
+    }},{new:true}).select("-password");
+    return res.status(200).json({
+        status:"success",
+        message:"User profile updated successfully",
+        user:newUser,
+    });
     try {
 
-        const oldUser = await User.findById(id);
-        const newUser= await User.findByIdAndUpdate(id,{
-            ...oldUser,
-            bio,
-            fullName,
-            profilePicture: pictureUrl,
-        },{new:true});
-
-        return res.status(200).json({
-            status:"success",
-            message:"User profile updated successfully",
-            user:newUser,
-        }); 
     } catch (error) {
         return res.status(500).json({
             status:"error",
